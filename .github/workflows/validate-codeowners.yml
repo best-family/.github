@@ -1,6 +1,8 @@
 name: validate-codeowners
 run-name: ${{ github.actor }} is validating CODEOWNERS
-on: [push]
+
+on: [push, workflow_dispatch]
+
 jobs:
     validate-codeowners:
         runs-on: ubuntu-latest
