@@ -1,0 +1,5 @@
+{
+    "name": "Add issues to default Org backlog",
+    "description": "Automatically adds repo issues to the Organization backlog.",
+    "iconName": "octicon shield-check"
+}
