@@ -1,6 +1,7 @@
 name: add issues to default project
 
 on:
+  workflow_dispatch:
   issues:
     types:
       - opened
