@@ -20,12 +20,6 @@ jobs:
         uses: actions/github-script@v7.0.1
         with:
           script: |
-            # https://octokit.github.io/rest.js/v20#repos
-            # get list of all the topics on the repo
-            # octokit.rest.repos.getAllTopics({
-            #  owner,
-            #  repo,
-            #});
             github.rest.repos.getAllTopics({
               owner: context.repo.owner,
               repo: context.repo.repo,
