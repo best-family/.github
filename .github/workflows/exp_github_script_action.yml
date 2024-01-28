@@ -30,8 +30,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-
-            const result = await
-            console.log(result)
       - name: Display repo topics
         run: echo "${{steps.get-repo-topics.outputs.result}}"
