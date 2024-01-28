@@ -4,17 +4,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  retrieve-context:
-    name: learning steps
+  display-context:
+    name: display context
     runs-on: ubuntu-latest
     steps:
       # examples: https://github.com/actions/github-script#examples
       # lets output all the contents of the context
-      - name: Display all context attributes
-        uses: actions/github-script@v7.0.1
+      - uses: actions/github-script@v7.0.1
         with:
           script: console.log(context)
 
+  display-result:
+    name: display result
+    runs-on: ubuntu-latest
+    steps:
       # example of how to read a step result and display it
       - uses: actions/github-script@v7.0.1
         id: set-result
@@ -24,6 +27,10 @@ jobs:
       - name: Display result
         run: echo "${{steps.set-result.outputs.result}}"
 
+  display-issues:
+    name: display issues in repo
+    runs-on: ubuntu-latest
+    steps:
       # example to retrieve and display repo issues
       - uses: actions/github-script@v7
         id: get-issues
@@ -34,9 +41,13 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-      - name: Display repo topics
+      - name: Display repo issues
         run: echo "${{steps.get-issues.outputs.result}}"
 
+  display-topics:
+    name: display topics on the repo
+    runs-on: ubuntu-latest
+    steps:
       # my ultimate goal is to read the repo topics for reuse in a later step
       - name: Get repo topics
         id: get-repo-topics
