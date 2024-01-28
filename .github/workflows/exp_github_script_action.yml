@@ -24,6 +24,19 @@ jobs:
       - name: Display result
         run: echo "${{steps.set-result.outputs.result}}"
 
+      # example to retrieve and display repo issues
+      - uses: actions/github-script@v7
+        id: get-issues
+        with:
+          script: |
+            github.rest.issues.get({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+      - name: Display repo topics
+        run: echo "${{steps.get-issues.outputs.result}}"
+
       # my ultimate goal is to read the repo topics for reuse in a later step
       - name: Get repo topics
         id: get-repo-topics
