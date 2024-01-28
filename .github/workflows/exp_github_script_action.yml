@@ -8,7 +8,30 @@ jobs:
     name: Retreive context data
     runs-on: ubuntu-latest
     steps:
-      - name: View context attributes
-        uses: actions/github-script@v7
+      # examples: https://github.com/actions/github-script#examples
+      # lets output all the contents of the context
+      - name: View all context attributes
+        uses: actions/github-script@v7.0.1
         with:
           script: console.log(context)
+      # now we want to look at the `topics: [Array],` part of the context object
+      - name: Get repo topics
+        id: get-repo-topics
+        uses: actions/github-script@v7.0.1
+        with:
+          script: |
+            # https://octokit.github.io/rest.js/v20#repos
+            # get list of all the topics on the repo
+            # octokit.rest.repos.getAllTopics({
+            #  owner,
+            #  repo,
+            #});
+            github.rest.repos.getAllTopics({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+
+            const result = await
+            console.log(result)
+      - name: Display repo topics
+        run: echo "${{steps.get-repo-topics.outputs.result}}"
