@@ -36,8 +36,7 @@ jobs:
         id: get-issues
         with:
           script: |
-            github.rest.issues.get({
-              issue_number: context.issue.number,
+            github.rest.issues.listforrepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
