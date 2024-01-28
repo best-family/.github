@@ -19,7 +19,7 @@ jobs:
         uses: actions/github-script@v7.0.1
         with:
           script: |
-            constant opts = github.rest.repos.getAllTopics({
+            const opts = github.rest.repos.getAllTopics({
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
