@@ -30,7 +30,6 @@ jobs:
         uses: actions/github-script@v7.0.1
         with:
           script: |
-            log: console,
             const alltopics = await github.rest.repos.getAllTopics({
               owner: context.repo.owner,
               repo: context.repo.repo,
