@@ -1,0 +1,13 @@
+name: experiment with GitHub CLI in Actions
+
+# https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/using-github-cli-in-workflows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  display-context:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          gh api repos/{owner}/{repo}/topics
