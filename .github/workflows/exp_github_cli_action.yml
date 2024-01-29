@@ -12,4 +12,4 @@ jobs:
       - run: |
           gh api repos/{owner}/{repo}/topics
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_ORG_BEST_FAMILY_REPOS_READ }}
