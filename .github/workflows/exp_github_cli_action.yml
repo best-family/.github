@@ -6,8 +6,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  display-context:
+  list-repo-topics:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          gh api repos/{owner}/{repo}/topics
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh api repos/$GH_REPO/topics
