@@ -24,4 +24,4 @@ jobs:
           echo 'REPO_LANGUAGE_LIST'=$repoLanguageList >> $GITHUB_ENV
       - name: display environment variables
         run: |
-          printenv
+          printenv | sort
