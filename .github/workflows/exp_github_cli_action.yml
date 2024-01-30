@@ -9,13 +9,12 @@ on:
   workflow_dispatch:
 
 env:
-  GH_TOKEN: ${{ secrets.GH_ORG_BEST_FAMILY_PROJECTS_ADMIN }}
-  #GH_REPO: ${{ github.repository }} # not needed us GITHUB_REPOSITORY instead
-  #GH_ORG: "best-family" # not needed us GITHUB_REPOSITORY_OWNER instead
+  GH_TOKEN: ${{ secrets.GITHUB_REPOSITORY_OWNER_BEST_FAMILY_PROJECTS_ADMIN }}
+  #GITHUB_REPOSITORY: ${{ github.repository }} # not needed us GITHUB_REPOSITORY instead
+  #GITHUB_REPOSITORY_OWNER: "best-family" # not needed us GITHUB_REPOSITORY_OWNER instead
   PROJECT_NUMBER: 4
   PROJECT_URL: "https://github.com/orgs/best-family/projects/4"
   #LABELS_ADDED: "" #TODO - future feature
-
 
 jobs:
   list-repo-topics:
@@ -23,11 +22,11 @@ jobs:
     steps:
       - name: retrieve list of repo topics
         run: |
-          repoTopicList=$(gh api repos/$GH_REPO/topics)
+          repoTopicList=$(gh api repos/$GITHUB_REPOSITORY/topics)
           echo 'REPO_TOPIC_LIST='$repoTopicList >> $GITHUB_ENV
       - name: retrieve list of repo languages
         run: |
-          repoLanguageList=$(gh api repos/$GH_REPO/languages)
+          repoLanguageList=$(gh api repos/$GITHUB_REPOSITORY/languages)
           echo 'REPO_LANGUAGE_LIST'=$repoLanguageList >> $GITHUB_ENV
       - name: display environment variables
         run: |
