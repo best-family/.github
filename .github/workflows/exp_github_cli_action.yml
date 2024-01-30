@@ -1,13 +1,20 @@
 name: experiment with GitHub CLI in Actions
 
 # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/using-github-cli-in-workflows
+# Example refs:
+#  * https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/automating-projects-using-actions
+
 
 on:
   workflow_dispatch:
 
 env:
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  GH_REPO: ${{ github.repository }}
+  GH_TOKEN: ${{ secrets.GH_ORG_BEST_FAMILY_PROJECTS_ADMIN }}
+  #GH_REPO: ${{ github.repository }} # not needed us GITHUB_REPOSITORY instead
+  #GH_ORG: "best-family" # not needed us GITHUB_REPOSITORY_OWNER instead
+  PROJECT_NUMBER: 4
+  PROJECT_URL: "https://github.com/orgs/best-family/projects/4"
+  #LABELS_ADDED: "" #TODO - future feature
 
 
 jobs:
@@ -25,3 +32,39 @@ jobs:
       - name: display environment variables
         run: |
           printenv | sort
+
+      # now we need to know if the issues in this repo have already been added to the PROJECT_TARGET
+
+      # based on example at https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/automating-projects-using-actions
+      # First, use the GraphQL API to request the project's node ID.
+      # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project
+      # and return the name and ID of the first 20 fields in the project. `fields` returns a union and
+      # the query uses inline fragments (`... on`) to return information about any `ProjectV2Field`
+      # and `ProjectV2SingleSelectField` fields. The response is stored in a file called
+      # `project_data.json`.
+      - name: retrieve project ID
+        run: |
+          gh api graphql -f query='
+          query($org: String!, $number: Int!) {
+            organization(login: $org){
+              projectV2(number: $number) {
+                id
+                fields(first:20) {
+                  nodes {
+                    ... on ProjectV2Field {
+                      id
+                      name
+                    }
+                    ... on ProjectV2SingleSelectField {
+                      id
+                      name
+                      options {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }' -f org=$GITHUB_REPOSITORY_OWNER -F number=$PROJECT_NUMBER
