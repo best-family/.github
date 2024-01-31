@@ -6,26 +6,31 @@ name: experiment with GitHub CLI in Actions
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ "develop" ]
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  PROJECT_NUMBER: 4
+  PROJECT_URL: "https://github.com/orgs/best-family/projects/4"
+  #LABELS_ADDED: "" #TODO - future feature - list of labels to add to issues when theyre added to the project
 
 jobs:
   list-repo-topics:
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_REPOSITORY_OWNER_BEST_FAMILY_PROJECTS_ADMIN }}
-      #GITHUB_REPOSITORY: {{ github.repository }} # not needed us GITHUB_REPOSITORY instead
-      #GITHUB_REPOSITORY_OWNER: "best-family" # not needed us GITHUB_REPOSITORY_OWNER instead
-      PROJECT_NUMBER: 4
-      PROJECT_URL: "https://github.com/orgs/best-family/projects/4"
-      #LABELS_ADDED: "" #TODO - future feature - list of labels to add to issues when theyre added to the project
     runs-on: ubuntu-latest
     steps:
       - name: display environment variables
         run: |
           printenv | sort
       - name: retrieve list of repo topics
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_REPOSITORY_OWNER_BEST_FAMILY_PROJECTS_ADMIN }}
         run: |
           repoTopicList=$(gh api repos/$GITHUB_REPOSITORY/topics)
           echo 'REPO_TOPIC_LIST='$repoTopicList >> $GITHUB_ENV
       - name: retrieve list of repo languages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_REPOSITORY_OWNER_BEST_FAMILY_PROJECTS_ADMIN }}
         run: |
           repoLanguageList=$(gh api repos/$GITHUB_REPOSITORY/languages)
           echo 'REPO_LANGUAGE_LIST'=$repoLanguageList >> $GITHUB_ENV
@@ -40,6 +45,8 @@ jobs:
       # and `ProjectV2SingleSelectField` fields. The response is stored in a file called
       # `project_data.json`.
       - name: retrieve project ID
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_REPOSITORY_OWNER_BEST_FAMILY_PROJECTS_ADMIN }}
         run: |
           gh api graphql -f query='
           query($org: String!, $number: Int!) {
