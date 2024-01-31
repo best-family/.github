@@ -20,9 +20,6 @@ jobs:
   list-repo-topics:
     runs-on: ubuntu-latest
     steps:
-      - name: display environment variables
-        run: |
-          printenv | sort
       - name: retrieve list of repo topics
         run: |
           repoTopicList=$(gh api repos/$GITHUB_REPOSITORY/topics)
@@ -67,3 +64,7 @@ jobs:
               }
             }
           }' -f org=$GITHUB_REPOSITORY_OWNER -F number=$PROJECT_NUMBER
+      # we always run this last so we get full visibility of all env vars including the ones that have been set in earlier steps.
+      - name: display environment variables
+        run: |
+          printenv | sort
