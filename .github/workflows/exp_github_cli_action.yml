@@ -40,30 +40,15 @@ jobs:
       # `project_data.json`.
       - name: retrieve project ID
         run: |
-          gh api graphql -f query='
-          query($org: String!, $number: Int!) {
-            organization(login: $org){
-              projectV2(number: $number) {
-                id
-                fields(first:20) {
-                  nodes {
-                    ... on ProjectV2Field {
-                      id
-                      name
-                    }
-                    ... on ProjectV2SingleSelectField {
-                      id
-                      name
-                      options {
-                        id
-                        name
-                      }
-                    }
-                  }
+          projectID="$(gh api graphql -f query='
+            query($org: String!, $number: Int!) {
+              organization(login: $org){
+                projectV2(number: $number) {
+                  id
                 }
               }
             }
-          }' -f org=$GITHUB_REPOSITORY_OWNER -F number=$PROJECT_NUMBER
+          ' -f org=$GITHUB_REPOSITORY_OWNER -F number=$PROJECT_NUMBER)"
       # we always run this last so we get full visibility of all env vars including the ones that have been set in earlier steps.
       - name: display environment variables
         run: |
