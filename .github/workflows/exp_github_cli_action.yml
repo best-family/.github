@@ -48,7 +48,8 @@ jobs:
                 }
               }
             }
-          ' -f org=$GITHUB_REPOSITORY_OWNER -F number=$PROJECT_NUMBER)"
+          ' -f org=$GITHUB_REPOSITORY_OWNER -F number=$PROJECT_NUMBER \
+            --jq '.data.organization.projectV2.id')"
 
           echo 'PROJECT_ID='$projectID >> $GITHUB_ENV
       # we always run this last so we get full visibility of all env vars including the ones that have been set in earlier steps.
