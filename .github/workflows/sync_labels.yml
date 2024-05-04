@@ -1,0 +1,39 @@
+name: Sync labels
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/labels.yml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.4
+      - uses: micnncim/action-label-syncer@v1.3.0
+        with:
+          manifest: .github/labels.yml
+          repository: |
+            best-family/home-monitoring
+            best-family/dns-over-https-proxy
+            best-family/terraform-azurerm-msdn-networking
+            best-family/wx-weather
+            best-family/terraform-azurerm-msdn-dns
+            best-family/terraform-azurerm-msdn-storage
+            best-family/terraform-azurerm-msdn-minecraft
+            best-family/homebrew-notifier
+            best-family/terraform-vault-msdn-jumphost
+            best-family/home-bootstrap
+            best-family/home-ansible
+            best-family/org-automation
+            best-family/home-docs
+            best-family/terraform-tfc
+            best-family/terraform-azurerm-msdn-jumphost
+            best-family/terraform-github
+            best-family/terraform-hcp
+            best-family/docker-compose
+            best-family/docker-caddy-azuredns
+            best-family/terraform-discord
+            best-family/.github
+            best-family/enterprise-actions
+          token: ${{ secrets.GH_ORG_BEST_FAMILY_PROJECTS_ADMIN }}
