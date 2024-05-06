@@ -31,3 +31,27 @@
 - color: ffffff
   description: This will not be worked on
   name: wontfix
+- color: 0CA66D
+  description: Issue related to something at home
+  name: home
+- color: 0052CC
+  description: Issue related to Terraform code
+  name: language/terraform
+- color: 6E5125
+  description: Relates to TFC/TFE
+  name: platform/terraform
+- color: FBCA04
+  description: Relates to Vault
+  name: platform/vault
+- color: 5319E7
+  description: Relates to GitHub
+  name: platform/GitHub
+- color: 1D76DB
+  description: Relates to Azure
+  name: platform/azure
+- color: D93F0B
+  description: Relates to AWS
+  name: platform/aws
+- color: 9DF24B
+  description: Relates to Ubiquity/Unifi
+  name: platform/ubiquity
